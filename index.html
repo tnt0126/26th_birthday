@@ -304,11 +304,11 @@
     </div>
 
     <div class="container">
-        <p>お久しぶりだぜ！もっちー！<br>
+        <p>
         今日はもっちーの26歳のお誕生日ですね！おめでとう！<br>
-        26歳をお祝いするためにプレゼントを用意したんだけど、今年は趣向を凝らして、自分でGETする形式にしてみた！是非26歳一発目の課題を解いて、最高のスタートダッシュを切ってくれ！！</p>
+        今年のプレゼントは趣向を凝らして、自分でGETする形式にしてみた！26歳一発目の課題を解いて、最高のスタートダッシュを切ってくれ！！</p>
 
-        <p>プレゼントを受け取る前のなぞかけだ！！。</p>
+        <p>プレゼントを受け取る前のなぞかけだ！！</p>
 
         <div class="puzzle-container">
             <div class="puzzle">
@@ -320,27 +320,28 @@
         <div class="answer-form">
             <input type="text" id="answer-input" placeholder="答えを入力してください">
             <button onclick="checkAnswer()">解答する</button>
-            <p class="answer-feedback" id="answer-feedback">残念！もう一度考えてみてください。</p>
+            <p class="answer-feedback" id="answer-feedback">おしい！もう一度考えてみて！。</p>
         </div>
         
         <div class="hint-dropdown">
             <select id="hint-select" class="hint-select" onchange="showSelectedHint()">
-                <option value="">ヒントを選択してください</option>
+                <option value="">ヒントを選択してね</option>
                 <option value="hint1">ヒント1</option>
                 <option value="hint2">ヒント2</option>
-                <option value="hint3">ヒント3 (かなり具体的)</option>
+                <option value="hint3">ヒント3</option>
             </select>
 
             <div id="hint1" class="hint-content">
-                今日はもっちーの誕生日だね！4/29日、26歳になりました。
+                今日はもっちーの誕生日だね！<br>
+                4/29日、26歳になりました！
             </div>
 
             <div id="hint2" class="hint-content">
-                4,29,26,4,29,26...を引くといいらしい？ (問題の数字の数だけ繰り返します)
+                4,29,26,4,29,26...を数字から引くといいらしい？ (問題の数字の数だけ繰り返してね)
             </div>
 
             <div id="hint3" class="hint-content">
-                その番号をアルファベットに変換するとメッセージが？！ (A=1, B=2, C=3...)
+                出てきた数字をアルファベットに変換するとメッセージが？！ (A=1, B=2, C=3...)
             </div>
             </div>
     </div>
