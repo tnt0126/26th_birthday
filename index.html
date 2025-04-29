@@ -314,15 +314,16 @@
             <div class="puzzle">
                 <strong>問題</strong><br>
                 下の数字列が示すメッセージを解いて、解答してね。<br><br>
-                <code>23 45 31 7 38 27 16 33 27 29</code>
+                <code>23 45 31 7 38 27 16 33 27 29</code><br><br>
+                <code>"答えは大文字の英語の文字列だよ！"</code>
             </div>
         </div>
         <div class="answer-form">
-            <input type="text" id="answer-input" placeholder="答えを入力してください">
+            <input type="text" id="answer-input" placeholder="答えを入力してください" value="SPECIALDAY">
             <button onclick="checkAnswer()">解答する</button>
             <p class="answer-feedback" id="answer-feedback">残念！もう一度考えてみてください。</p>
         </div>
-
+        
         <div class="hint-dropdown">
             <select id="hint-select" class="hint-select" onchange="showSelectedHint()">
                 <option value="">ヒントを選択してください</option>
@@ -348,9 +349,9 @@
     <div class="celebration" id="celebration">
         <div class="celebration-content">
             <h2>🎉 お誕生日おめでとう! 🎉</h2>
-            <p>もっちー、26歳のお誕生日おめでとう！</p>
+            <p>もっちー改めて、26歳のお誕生日おめでとう！</p>
             <p>これからの一年が素敵な年になりますように。</p>
-            <img src="starbacks_images.jpg" alt="コーヒーカップ" class="coffee-cup"> <p>あなたへのささやかなプレゼントです。<br>お好きなスターバックスのドリンクでも楽しんでください♪</p>
+            <img src="starbacks_images.jpg" alt="コーヒーカップ" class="coffee-cup"> <p>あなたへのささやかなプレゼントです。<br>お好きなスターバックスのドリンクを楽しんでください♪</p>
             <a href="#" class="gift-button" id="gift-link">スタバギフト3000円分を受け取る</a>
         </div>
     </div>
@@ -440,7 +441,7 @@
             createConfetti();
 
             // eギフトへのリンク設定 (重要：実際のURLに置き換えてください)
-            document.getElementById('gift-link').setAttribute('href', '【ここにスタバのeギフトURLを入れてください】');
+            document.getElementById('gift-link').setAttribute('href', 'https://gift.starbucks.co.jp/c/1745uOlfwwAtMb9XoO3FBqpcCllmsLUz');
 
             // お祝いスター演出
             createCelebrationStars();
