@@ -236,7 +236,7 @@
             border: 1px solid rgba(240, 197, 20, 0.3);
             border-radius: 8px;
             font-size: 0.9rem;
-            display: none;
+            display: none; /* 初期状態は非表示 */
         }
         .gift-button {
             display: inline-block;
@@ -277,7 +277,7 @@
             margin-top: 1rem;
             color: #d42f2f;
             font-weight: bold;
-            display: none;
+            display: none; /* 初期状態は非表示 */
         }
         .star {
             position: absolute;
@@ -293,7 +293,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
+            pointer-events: none; /* クリックイベントを透過 */
             z-index: -1;
         }
     </style>
@@ -302,30 +302,27 @@
     <div class="header">
         <h1>✨ もっちーへの誕生日サプライズ ✨</h1>
     </div>
-    
+
     <div class="container">
         <p>お久しぶりだぜ！もっちー！<br>
         今日はもっちーの26歳のお誕生日ですね！おめでとう！<br>
         26歳をお祝いするためにプレゼントを用意したんだけど、今年は趣向を凝らして、自分でGETする形式にしてみた！是非26歳一発目の課題を解いて、最高のスタートダッシュを切ってくれ！！</p>
-        
+
         <p>プレゼントを受け取る前のなぞかけだ！！。</p>
-        
+
         <div class="puzzle-container">
             <div class="puzzle">
-                <strong>なぞかけ</strong><br>
-                「4月29日に生まれ、26歳になるもっちー」<br>
-                「スターバックスの一番人気のドリンク」と解きます<br><br>
-                <strong>その心は？</strong>
+                <strong>問題</strong><br>
+                下の数字列が示すメッセージを解いて、解答してね。<br><br>
+                <code>23 45 31 7 38 27 16 33 27 29</code>
             </div>
         </div>
-        
         <div class="answer-form">
             <input type="text" id="answer-input" placeholder="答えを入力してください">
             <button onclick="checkAnswer()">解答する</button>
             <p class="answer-feedback" id="answer-feedback">残念！もう一度考えてみてください。</p>
         </div>
-        
-        <!-- ヒントのドロップダウン -->
+
         <div class="hint-dropdown">
             <select id="hint-select" class="hint-select" onchange="showSelectedHint()">
                 <option value="">ヒントを選択してください</option>
@@ -333,42 +330,42 @@
                 <option value="hint2">ヒント2</option>
                 <option value="hint3">ヒント3 (かなり具体的)</option>
             </select>
-            
+
             <div id="hint1" class="hint-content">
-                スターバックスの人気ドリンクの種類を考えてみて！
+                今日はもっちーの誕生日だね！4/29日、26歳になりました。
             </div>
-            
+
             <div id="hint2" class="hint-content">
-                「4月29日」「26歳」「もっちー」という言葉の特徴や読み方に注目してみて！
+                4,29,26,4,29,26...を引くといいらしい？ (問題の数字の数だけ繰り返します)
             </div>
-            
+
             <div id="hint3" class="hint-content">
-                「とく」で始まる言葉を考えてみて。「とくべつ」かも？
+                その番号をアルファベットに変換するとメッセージが？！ (A=1, B=2, C=3...)
             </div>
-        </div>
+            </div>
     </div>
-    
+
     <div class="celebration" id="celebration">
         <div class="celebration-content">
             <h2>🎉 お誕生日おめでとう! 🎉</h2>
             <p>もっちー、26歳のお誕生日おめでとう！</p>
             <p>これからの一年が素敵な年になりますように。</p>
-            <img src="starbacks_images.jpg" alt="コーヒーカップ" class="coffee-cup">
-            <p>あなたへのささやかなプレゼントです。<br>お好きなスターバックスのドリンクでも楽しんでください♪</p>
+            <img src="starbacks_images.jpg" alt="コーヒーカップ" class="coffee-cup"> <p>あなたへのささやかなプレゼントです。<br>お好きなスターバックスのドリンクでも楽しんでください♪</p>
             <a href="#" class="gift-button" id="gift-link">スタバギフト3000円分を受け取る</a>
         </div>
     </div>
-    
+
     <script>
-        // なぞかけの答え
-        const correctAnswer = "どちらも特別な（トクベツな）";
-        
+        // === ここからJavaScript変更 ===
+        // なぞかけの答え (小文字で統一)
+        const correctAnswer = "specialday"; // 正しい答えを設定
+
         // 背景に星を追加
         function createPageStars() {
             const pageStars = document.createElement('div');
             pageStars.className = 'page-stars';
             document.body.appendChild(pageStars);
-            
+
             for (let i = 0; i < 15; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
@@ -377,14 +374,14 @@
                 star.style.width = Math.random() * 10 + 10 + 'px';
                 star.style.height = Math.random() * 10 + 10 + 'px';
                 star.style.opacity = Math.random() * 0.3 + 0.1;
-                
+
                 pageStars.appendChild(star);
-                
+
                 // きらきらアニメーション
                 star.animate(
                     [
                         { opacity: star.style.opacity, transform: 'scale(1)' },
-                        { opacity: star.style.opacity * 1.5, transform: 'scale(1.2)' },
+                        { opacity: parseFloat(star.style.opacity) * 1.5, transform: 'scale(1.2)' }, // opacityを数値に変換
                         { opacity: star.style.opacity, transform: 'scale(1)' }
                     ],
                     {
@@ -396,10 +393,10 @@
                 );
             }
         }
-        
+
         // ページ読み込み時に星を作成
         window.addEventListener('DOMContentLoaded', createPageStars);
-        
+
         // ヒントドロップダウンの処理
         function showSelectedHint() {
             // すべてのヒントを非表示にする
@@ -407,145 +404,162 @@
             allHints.forEach(hint => {
                 hint.style.display = 'none';
             });
-            
+
             // 選択されたヒントを表示
             const selectedValue = document.getElementById('hint-select').value;
             if (selectedValue) {
                 document.getElementById(selectedValue).style.display = 'block';
             }
         }
-        
+
         function checkAnswer() {
             const userAnswer = document.getElementById('answer-input').value;
             const feedback = document.getElementById('answer-feedback');
-            
-            // 答えのチェック - 一部の表現違いも許容
-            if (userAnswer.includes("特別") || 
-                userAnswer.includes("トクベツ") || 
-                userAnswer.includes("特別な") || 
-                userAnswer.includes("とくべつ")) {
-                
+
+            // 答えのチェック - 大文字小文字を区別せず、空白を除去して比較
+            if (userAnswer.trim().toLowerCase() === correctAnswer) {
                 // 正解アニメーション表示
                 showCelebration();
+                feedback.style.display = "none"; // 正解時はフィードバックを非表示
             } else {
                 // 不正解のフィードバック
                 feedback.style.display = "block";
+                // 一定時間後にフィードバックを非表示にする
                 setTimeout(() => {
                     feedback.style.display = "none";
-                }, 3000);
+                }, 3000); // 3秒後に非表示
             }
         }
-        
+        // === ここまでJavaScript変更 ===
+
         function showCelebration() {
             const celebration = document.getElementById('celebration');
             celebration.style.display = "flex";
-            
+
             // 紙吹雪アニメーション
             createConfetti();
-            
-            // eギフトへのリンク設定
+
+            // eギフトへのリンク設定 (重要：実際のURLに置き換えてください)
             document.getElementById('gift-link').setAttribute('href', '【ここにスタバのeギフトURLを入れてください】');
-            
+
             // お祝いスター演出
             createCelebrationStars();
         }
-        
+
         function createCelebrationStars() {
             const celebrationContent = document.querySelector('.celebration-content');
-            
+            if (!celebrationContent) return; // 要素が見つからない場合は処理を中断
+
             for (let i = 0; i < 8; i++) {
                 setTimeout(() => {
                     const star = document.createElement('div');
                     star.className = 'star';
-                    star.style.position = 'absolute';
+                    star.style.position = 'absolute'; // celebration-content基準で配置するため
                     star.style.width = Math.random() * 15 + 15 + 'px';
                     star.style.height = Math.random() * 15 + 15 + 'px';
-                    
-                    // 星の位置を調整して内側に配置
+
+                    // 星の位置を celebration-content の中央付近から放射状に配置
                     const angle = Math.random() * Math.PI * 2;
-                    const distance = Math.random() * 100 + 200;
+                    const distance = Math.random() * 50 + 50; // 中心からの距離
                     const centerX = celebrationContent.offsetWidth / 2;
                     const centerY = celebrationContent.offsetHeight / 2;
-                    
-                    star.style.top = centerY + Math.sin(angle) * distance / 2 + 'px';
-                    star.style.left = centerX + Math.cos(angle) * distance / 2 + 'px';
-                    
-                    star.style.opacity = 0;
-                    celebrationContent.appendChild(star);
-                    
+
+                    // 要素の中心を基準にするため、星のサイズの半分を引く
+                    const starWidth = parseFloat(star.style.width);
+                    const starHeight = parseFloat(star.style.height);
+                    star.style.top = (centerY + Math.sin(angle) * distance - starHeight / 2) + 'px';
+                    star.style.left = (centerX + Math.cos(angle) * distance - starWidth / 2) + 'px';
+
+                    star.style.opacity = 0; // 初期状態は透明
+                    celebrationContent.appendChild(star); // celebration-content内に追加
+
                     // 星が輝くアニメーション
-                    star.animate(
+                    const animation = star.animate(
                         [
                             { opacity: 0, transform: 'scale(0.3) rotate(0deg)' },
                             { opacity: 1, transform: 'scale(1.2) rotate(180deg)' },
                             { opacity: 0, transform: 'scale(0.3) rotate(360deg)' }
                         ],
                         {
-                            duration: 2000,
+                            duration: 2000, // アニメーション時間
                             easing: 'ease-in-out',
-                            fill: 'forwards'
+                            fill: 'forwards' // アニメーション終了時の状態を維持
                         }
-                    ).onfinish = function() {
+                    );
+                    // アニメーション終了後に要素を削除
+                    animation.onfinish = function() {
+                         // 少し遅延させてから削除しないと、最後が見えないことがある
                         setTimeout(() => {
-                            star.remove();
-                        }, 100);
+                           if (star.parentNode) { // 親要素が存在するか確認してから削除
+                                star.remove();
+                           }
+                        }, 50);
                     };
-                }, i * 300);
+                }, i * 300); // 少しずつずらして星を表示
             }
         }
-        
+
+
         function createConfetti() {
             const confettiCount = 120;
             const celebration = document.getElementById('celebration');
-            
+            if (!celebration) return; // 要素がない場合は中断
+
             for (let i = 0; i < confettiCount; i++) {
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
-                
+
                 // 紙吹雪と星を混ぜる
                 const isGoldStar = Math.random() < 0.3; // 30%の確率で金の星
-                
+
                 if (isGoldStar) {
-                    confetti.style.backgroundColor = 'transparent';
+                    confetti.style.backgroundColor = 'transparent'; // 星は背景色なし
                     confetti.style.width = Math.random() * 15 + 10 + 'px';
                     confetti.style.height = Math.random() * 15 + 10 + 'px';
                     confetti.style.clipPath = 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)';
-                    confetti.style.background = '#f0c514';
+                    confetti.style.background = '#f0c514'; // 星の色
                 } else {
                     // ランダムな色
                     const colors = ['#00704A', '#f0c514', '#ffffff', '#ff88a0', '#8c5e31', '#d4af37'];
                     const color = colors[Math.floor(Math.random() * colors.length)];
-                    
+
                     confetti.style.backgroundColor = color;
                     confetti.style.width = Math.random() * 10 + 5 + 'px';
                     confetti.style.height = Math.random() * 10 + 5 + 'px';
                 }
-                
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.top = -20 + 'px';
-                confetti.style.opacity = Math.random() + 0.3;
-                
-                celebration.appendChild(confetti);
-                
+
+                confetti.style.position = 'absolute'; // 親要素基準で配置
+                confetti.style.left = Math.random() * 100 + '%'; // 横位置ランダム
+                confetti.style.top = -20 + 'px'; // 初期位置は画面上部外
+                confetti.style.opacity = Math.random() + 0.3; // 透明度ランダム
+
+                celebration.appendChild(confetti); // celebration要素に追加
+
                 // アニメーション
                 const animation = confetti.animate(
                     [
-                        { transform: 'translate3d(0, 0, 0) rotate(0deg)', opacity: Math.random() + 0.3 },
-                        { transform: `translate3d(${Math.random() * 250 - 125}px, ${Math.random() * window.innerHeight + 100}px, 0) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                        // 開始状態: 初期位置、回転なし、指定の透明度
+                        { transform: 'translate3d(0, 0, 0) rotate(0deg)', opacity: parseFloat(confetti.style.opacity) },
+                        // 終了状態: ランダムなX座標、画面下部までのY座標、ランダムな回転、透明度0
+                        { transform: `translate3d(${Math.random() * 250 - 125}px, ${window.innerHeight + 50}px, 0) rotate(${Math.random() * 720 - 360}deg)`, opacity: 0 }
                     ],
                     {
-                        duration: Math.random() * 3000 + 2000,
-                        easing: 'cubic-bezier(0, .9, .57, 1)',
-                        delay: Math.random() * 1500
+                        duration: Math.random() * 3000 + 3000, // アニメーション時間 (3〜6秒)
+                        easing: 'cubic-bezier(0.1, 0.9, 0.9, 0.1)', // イージング関数
+                        delay: Math.random() * 500 // 開始遅延を少しランダムに
                     }
                 );
-                
+
+                // アニメーション終了後に要素を削除
                 animation.onfinish = function() {
-                    confetti.remove();
+                    if (confetti.parentNode) { // 親要素が存在するか確認
+                        confetti.remove();
+                    }
                 };
             }
         }
-        
+
+
         // Enterキーでも回答できるようにする
         document.getElementById('answer-input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
