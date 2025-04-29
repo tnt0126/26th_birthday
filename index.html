@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>優美ちゃんへ、お誕生日おめでとう！</title>
+    <title>もっちーへ、お誕生日おめでとう！</title>
     <style>
         body {
             font-family: 'Hiragino Kaku Gothic Pro', 'メイリオ', sans-serif;
@@ -208,28 +208,35 @@
             height: 10px;
             opacity: 0;
         }
-        .hidden-hint {
-            font-size: 0.8rem;
-            color: #8a7a44;
-            margin-top: 3rem;
-            cursor: pointer;
-            display: inline-block;
-            padding: 8px 15px;
-            border-radius: 20px;
-            background: rgba(240, 197, 20, 0.1);
-            transition: background 0.3s;
+        /* ヒントのドロップダウンスタイル */
+        .hint-dropdown {
+            margin-top: 2rem;
+            width: 80%;
+            max-width: 400px;
         }
-        .hidden-hint:hover {
-            background: rgba(240, 197, 20, 0.2);
+        .hint-select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid rgba(240, 197, 20, 0.5);
+            border-radius: 6px;
+            font-size: 1rem;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .hint-select:focus {
+            outline: none;
+            border-color: #00704A;
+            box-shadow: 0 0 10px rgba(0, 113, 74, 0.3);
         }
         .hint-content {
-            display: none;
             margin-top: 1rem;
             padding: 1rem;
             background-color: #f7f9fa;
             border: 1px solid rgba(240, 197, 20, 0.3);
             border-radius: 8px;
             font-size: 0.9rem;
+            display: none;
         }
         .gift-button {
             display: inline-block;
@@ -293,18 +300,20 @@
 </head>
 <body>
     <div class="header">
-        <h1>✨ 優美ちゃんへの誕生日サプライズ ✨</h1>
+        <h1>✨ もっちーへの誕生日サプライズ ✨</h1>
     </div>
     
     <div class="container">
-        <p>こんにちは、優美ちゃん！<br>今日はあなたの26歳のお誕生日ですね。<br>おめでとう！🎂✨</p>
+        <p>お久しぶりだぜ！もっちー！<br>
+        今日はもっちーの26歳のお誕生日ですね！おめでとう！<br>
+        26歳をお祝いするためにプレゼントを用意したんだけど、今年は趣向を凝らして、自分でGETする形式にしてみた！是非26歳一発目の課題を解いて、最高のスタートダッシュを切ってくれ！！</p>
         
-        <p>プレゼントを受け取る前に、一つなぞかけを解いてみてください。</p>
+        <p>プレゼントを受け取る前のなぞかけだ！！。</p>
         
         <div class="puzzle-container">
             <div class="puzzle">
                 <strong>なぞかけ</strong><br>
-                「4月29日に生まれ、26歳になる優美ちゃん」とかけまして<br>
+                「4月29日に生まれ、26歳になるもっちー」<br>
                 「スターバックスの一番人気のドリンク」と解きます<br><br>
                 <strong>その心は？</strong>
             </div>
@@ -316,17 +325,33 @@
             <p class="answer-feedback" id="answer-feedback">残念！もう一度考えてみてください。</p>
         </div>
         
-        <div class="hidden-hint" onclick="toggleHint()">ヒントを見る</div>
-        <div class="hint-content" id="hint-content">
-            ヒント1: スターバックスの人気ドリンクの種類を考えてみて！<br>
-            ヒント2: 「4月29日」「26歳」「優美」という言葉の特徴や読み方に注目してみて！
+        <!-- ヒントのドロップダウン -->
+        <div class="hint-dropdown">
+            <select id="hint-select" class="hint-select" onchange="showSelectedHint()">
+                <option value="">ヒントを選択してください</option>
+                <option value="hint1">ヒント1</option>
+                <option value="hint2">ヒント2</option>
+                <option value="hint3">ヒント3 (かなり具体的)</option>
+            </select>
+            
+            <div id="hint1" class="hint-content">
+                スターバックスの人気ドリンクの種類を考えてみて！
+            </div>
+            
+            <div id="hint2" class="hint-content">
+                「4月29日」「26歳」「もっちー」という言葉の特徴や読み方に注目してみて！
+            </div>
+            
+            <div id="hint3" class="hint-content">
+                「とく」で始まる言葉を考えてみて。「とくべつ」かも？
+            </div>
         </div>
     </div>
     
     <div class="celebration" id="celebration">
         <div class="celebration-content">
             <h2>🎉 お誕生日おめでとう! 🎉</h2>
-            <p>優美ちゃん、26歳のお誕生日おめでとう！</p>
+            <p>もっちー、26歳のお誕生日おめでとう！</p>
             <p>これからの一年が素敵な年になりますように。</p>
             <img src="/api/placeholder/80/80" alt="コーヒーカップ" class="coffee-cup">
             <p>あなたへのささやかなプレゼントです。<br>お好きなスターバックスのドリンクでも楽しんでください♪</p>
@@ -374,6 +399,21 @@
         
         // ページ読み込み時に星を作成
         window.addEventListener('DOMContentLoaded', createPageStars);
+        
+        // ヒントドロップダウンの処理
+        function showSelectedHint() {
+            // すべてのヒントを非表示にする
+            const allHints = document.querySelectorAll('.hint-content');
+            allHints.forEach(hint => {
+                hint.style.display = 'none';
+            });
+            
+            // 選択されたヒントを表示
+            const selectedValue = document.getElementById('hint-select').value;
+            if (selectedValue) {
+                document.getElementById(selectedValue).style.display = 'block';
+            }
+        }
         
         function checkAnswer() {
             const userAnswer = document.getElementById('answer-input').value;
@@ -503,15 +543,6 @@
                 animation.onfinish = function() {
                     confetti.remove();
                 };
-            }
-        }
-        
-        function toggleHint() {
-            const hintContent = document.getElementById('hint-content');
-            if (hintContent.style.display === 'block') {
-                hintContent.style.display = 'none';
-            } else {
-                hintContent.style.display = 'block';
             }
         }
         
