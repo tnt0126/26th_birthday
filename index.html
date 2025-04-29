@@ -366,7 +366,7 @@
             const pageStars = document.createElement('div');
             pageStars.className = 'page-stars';
             document.body.appendChild(pageStars);
-
+            
             for (let i = 0; i < 15; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
@@ -375,14 +375,14 @@
                 star.style.width = Math.random() * 10 + 10 + 'px';
                 star.style.height = Math.random() * 10 + 10 + 'px';
                 star.style.opacity = Math.random() * 0.3 + 0.1;
-
+                
                 pageStars.appendChild(star);
-
+                
                 // きらきらアニメーション
                 star.animate(
                     [
                         { opacity: star.style.opacity, transform: 'scale(1)' },
-                        { opacity: parseFloat(star.style.opacity) * 1.5, transform: 'scale(1.2)' }, // opacityを数値に変換
+                        { opacity: star.style.opacity * 1.5, transform: 'scale(1.2)' },
                         { opacity: star.style.opacity, transform: 'scale(1)' }
                     ],
                     {
@@ -395,6 +395,7 @@
             }
         }
 
+        
         // ページ読み込み時に星を作成
         window.addEventListener('DOMContentLoaded', createPageStars);
 
@@ -447,119 +448,101 @@
             createCelebrationStars();
         }
 
-        function createCelebrationStars() {
+       function createCelebrationStars() {
             const celebrationContent = document.querySelector('.celebration-content');
-            if (!celebrationContent) return; // 要素が見つからない場合は処理を中断
-
+            
             for (let i = 0; i < 8; i++) {
                 setTimeout(() => {
                     const star = document.createElement('div');
                     star.className = 'star';
-                    star.style.position = 'absolute'; // celebration-content基準で配置するため
+                    star.style.position = 'absolute';
                     star.style.width = Math.random() * 15 + 15 + 'px';
                     star.style.height = Math.random() * 15 + 15 + 'px';
-
-                    // 星の位置を celebration-content の中央付近から放射状に配置
+                    
+                    // 星の位置を調整して内側に配置
                     const angle = Math.random() * Math.PI * 2;
-                    const distance = Math.random() * 50 + 50; // 中心からの距離
+                    const distance = Math.random() * 100 + 200;
                     const centerX = celebrationContent.offsetWidth / 2;
                     const centerY = celebrationContent.offsetHeight / 2;
-
-                    // 要素の中心を基準にするため、星のサイズの半分を引く
-                    const starWidth = parseFloat(star.style.width);
-                    const starHeight = parseFloat(star.style.height);
-                    star.style.top = (centerY + Math.sin(angle) * distance - starHeight / 2) + 'px';
-                    star.style.left = (centerX + Math.cos(angle) * distance - starWidth / 2) + 'px';
-
-                    star.style.opacity = 0; // 初期状態は透明
-                    celebrationContent.appendChild(star); // celebration-content内に追加
-
+                    
+                    star.style.top = centerY + Math.sin(angle) * distance / 2 + 'px';
+                    star.style.left = centerX + Math.cos(angle) * distance / 2 + 'px';
+                    
+                    star.style.opacity = 0;
+                    celebrationContent.appendChild(star);
+                    
                     // 星が輝くアニメーション
-                    const animation = star.animate(
+                    star.animate(
                         [
                             { opacity: 0, transform: 'scale(0.3) rotate(0deg)' },
                             { opacity: 1, transform: 'scale(1.2) rotate(180deg)' },
                             { opacity: 0, transform: 'scale(0.3) rotate(360deg)' }
                         ],
                         {
-                            duration: 2000, // アニメーション時間
+                            duration: 2000,
                             easing: 'ease-in-out',
-                            fill: 'forwards' // アニメーション終了時の状態を維持
+                            fill: 'forwards'
                         }
-                    );
-                    // アニメーション終了後に要素を削除
-                    animation.onfinish = function() {
-                         // 少し遅延させてから削除しないと、最後が見えないことがある
+                    ).onfinish = function() {
                         setTimeout(() => {
-                           if (star.parentNode) { // 親要素が存在するか確認してから削除
-                                star.remove();
-                           }
-                        }, 50);
+                            star.remove();
+                        }, 100);
                     };
-                }, i * 300); // 少しずつずらして星を表示
+                }, i * 300);
             }
         }
-
-
+        
         function createConfetti() {
             const confettiCount = 120;
             const celebration = document.getElementById('celebration');
-            if (!celebration) return; // 要素がない場合は中断
-
+            
             for (let i = 0; i < confettiCount; i++) {
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
-
+                
                 // 紙吹雪と星を混ぜる
                 const isGoldStar = Math.random() < 0.3; // 30%の確率で金の星
-
+                
                 if (isGoldStar) {
-                    confetti.style.backgroundColor = 'transparent'; // 星は背景色なし
+                    confetti.style.backgroundColor = 'transparent';
                     confetti.style.width = Math.random() * 15 + 10 + 'px';
                     confetti.style.height = Math.random() * 15 + 10 + 'px';
                     confetti.style.clipPath = 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)';
-                    confetti.style.background = '#f0c514'; // 星の色
+                    confetti.style.background = '#f0c514';
                 } else {
                     // ランダムな色
                     const colors = ['#00704A', '#f0c514', '#ffffff', '#ff88a0', '#8c5e31', '#d4af37'];
                     const color = colors[Math.floor(Math.random() * colors.length)];
-
+                    
                     confetti.style.backgroundColor = color;
                     confetti.style.width = Math.random() * 10 + 5 + 'px';
                     confetti.style.height = Math.random() * 10 + 5 + 'px';
                 }
-
-                confetti.style.position = 'absolute'; // 親要素基準で配置
-                confetti.style.left = Math.random() * 100 + '%'; // 横位置ランダム
-                confetti.style.top = -20 + 'px'; // 初期位置は画面上部外
-                confetti.style.opacity = Math.random() + 0.3; // 透明度ランダム
-
-                celebration.appendChild(confetti); // celebration要素に追加
-
+                
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = -20 + 'px';
+                confetti.style.opacity = Math.random() + 0.3;
+                
+                celebration.appendChild(confetti);
+                
                 // アニメーション
                 const animation = confetti.animate(
                     [
-                        // 開始状態: 初期位置、回転なし、指定の透明度
-                        { transform: 'translate3d(0, 0, 0) rotate(0deg)', opacity: parseFloat(confetti.style.opacity) },
-                        // 終了状態: ランダムなX座標、画面下部までのY座標、ランダムな回転、透明度0
-                        { transform: `translate3d(${Math.random() * 250 - 125}px, ${window.innerHeight + 50}px, 0) rotate(${Math.random() * 720 - 360}deg)`, opacity: 0 }
+                        { transform: 'translate3d(0, 0, 0) rotate(0deg)', opacity: Math.random() + 0.3 },
+                        { transform: `translate3d(${Math.random() * 250 - 125}px, ${Math.random() * window.innerHeight + 100}px, 0) rotate(${Math.random() * 360}deg)`, opacity: 0 }
                     ],
                     {
-                        duration: Math.random() * 3000 + 3000, // アニメーション時間 (3〜6秒)
-                        easing: 'cubic-bezier(0.1, 0.9, 0.9, 0.1)', // イージング関数
-                        delay: Math.random() * 500 // 開始遅延を少しランダムに
+                        duration: Math.random() * 3000 + 2000,
+                        easing: 'cubic-bezier(0, .9, .57, 1)',
+                        delay: Math.random() * 1500
                     }
                 );
-
-                // アニメーション終了後に要素を削除
+                
                 animation.onfinish = function() {
-                    if (confetti.parentNode) { // 親要素が存在するか確認
-                        confetti.remove();
-                    }
+                    confetti.remove();
                 };
             }
         }
-
 
         // Enterキーでも回答できるようにする
         document.getElementById('answer-input').addEventListener('keypress', function(e) {
